@@ -12,17 +12,7 @@ ActiveRecord::Base.establish_connection({
   database: "has_config_test"
 })
 
-ActiveRecord::Schema.define do
-  self.verbose = false
+require 'schema'
+require 'models'
 
-  create_table :clients, :force => true do |t|
-    t.string :name
-    t.json :configuration
-  end
 
-end
-
-class Client < ActiveRecord::Base
-  include HasConfig
-  has_config :foo, :string
-end
