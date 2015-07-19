@@ -7,7 +7,7 @@ module HasConfig
 
   def configuration_for_group(group_name)
     group_config = {}
-    self.class.configuration_groups[group_name.to_s].each do |config_name|
+    (self.class.configuration_groups[group_name.to_s] || {}).each do |config_name|
       group_config[config_name.to_sym] = public_send(config_name)
     end
     group_config

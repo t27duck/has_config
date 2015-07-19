@@ -5,6 +5,35 @@ class TestHasConfig < Minitest::Test
     refute_nil ::HasConfig::VERSION
   end
 
+  def test_validations_can_be_attached
+    object = WithValidation.new
+    refute object.valid?
+
+    assert object.errors[:favorite_color].include?("can't be blank")
+    assert object.errors[:rate_limit].include?('is not included in the list')
+
+    object.favorite_color = 'red'
+    object.rate_limit = 1
+    assert object.valid?
+  end
+
+  def test_default_values_are_set
+    object = WithDefault.new
+    refute object.favorite_color.nil?
+  end
+
+  def test_group_organizes_config
+    run_tests WithGroup
+
+    object = WithGroup.new
+    group_info = object.configuration_for_group(:some_group)
+    refute group_info.has_key?(:favorite_color)
+    assert group_info.has_key?(:enable_email)
+    assert group_info.has_key?(:rate_limit)
+
+    assert_equal object.configuration_for_group(:non_existant_group), {}
+  end
+
   def test_standard_hash_column_model
     run_tests HashModel
   end
@@ -25,6 +54,8 @@ class TestHasConfig < Minitest::Test
       rate_limit: 3
     }
     object = klass.new
+
+    assert object.valid?
 
     default_config.keys.each do |config_key|
       assert object.respond_to?(config_key), "Instance of #{klass} does not respond to #{config_key}"
