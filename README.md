@@ -76,9 +76,13 @@ Ok, still with me? Back to our example...
 Here, the `Client` model has five configuration items on it: `primary_color`, `secondary_color`, `rate_limit`, `category`, and `active`. So, knowing what you just learned above...
 
 `primary_color` is a string with a default value of green and grouped in the "style" group of configuration options.
+
 `secondary_color` is a string without a default. It too is in the "style" group.
+
 `rate_limit` is an integer that validates its value is in fact, an integer.
+
 `category` is a string that must be a value in the array `CATEGORIES`.
+
 `active` is a boolean value with a default of `false`.
 
 We can now access these configuration settings as if they were regular attributes on the model:
@@ -107,7 +111,7 @@ client.errors.full_messages
 
 Everything acts pretty much as you'd expect it too do. Configurations that fail validations make the record invalid. Passing in '1', 'true', `true`, etc casts boolean values. Passing in an empty string for an integer config casts as `nil`.
 
-Finally, you can access all configuration values under a specific group with the `configuration_for_gorup` method.
+Finally, you can access all configuration values under a specific group with the `configuration_for_group` method.
 
 ```irb
 client.configuration_for_group(:style)
