@@ -4,6 +4,10 @@ require 'has_config'
 require 'minitest/autorun'
 require 'minitest/pride'
 
+if !defined?(MiniTest::Test)
+  MiniTest::Test = MiniTest::Unit::TestCase
+end
+
 require 'active_record'
 require 'pg'
 
