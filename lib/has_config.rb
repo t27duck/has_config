@@ -18,7 +18,7 @@ module HasConfig
       raise ArgumentError, "Invalid type #{type}" unless [:string, :integer, :boolean].include?(type)
 
       define_configuration_getter(key, default, type == :boolean)
-      define_configuration_setting(key, type)
+      define_configuration_setter(key, type)
       set_configuration_group(key, group) if group.present?
       set_configuration_validations(key, validations) if validations.present?
     end
@@ -51,7 +51,7 @@ module HasConfig
       end
     end
 
-    def define_configuration_setting(key, type)
+    def define_configuration_setter(key, type)
       define_method("#{key}=") do |input|
         config = (attributes[self.class.configuration_column] || {})
         if input.nil?
