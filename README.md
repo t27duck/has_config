@@ -1,5 +1,7 @@
 # HasConfig
 
+[![Build Status](https://travis-ci.org/t27duck/has_config.svg?branch=master)](https://travis-ci.org/t27duck/has_config)
+
 When working with models in a large Rails project, you sometimes end up with "god objects" which start to be loaded down with several booleans, integers, and strings from select boxes that act as configuration options. As time goes on, you add more and more columns. As your database and user-base grows, adding even a single column more can bring your app to a hault during a deploy due to table locking or a slew of exceptions due to [issues and gotchas like this](https://github.com/rails/rails/issues/12330).
 
 In an attempt to cut down on cluttering your model with boolean columns, `has_config` allows you to have a single column contain all configuration switches you could ever want. Adding another configuration option to a model no longer requires a migration to add a column. You can also contiue writing code as if the model had all of those indiviual attributes.

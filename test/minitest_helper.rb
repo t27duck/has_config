@@ -4,6 +4,7 @@ require 'has_config'
 require 'minitest/autorun'
 require 'minitest/pride'
 
+# Compatability for older MiniTest versions (ie Rails 4.0 uses MiniTest 4.7)
 if !defined?(MiniTest::Test)
   MiniTest::Test = MiniTest::Unit::TestCase
 end
