@@ -7,6 +7,8 @@ gemfile:
   - gemfiles/4.0.gemfile
   - gemfiles/4.1.gemfile
   - gemfiles/4.2.gemfile
+addons:
+  postgresql: '9.3'
 before_script:
   - psql -c 'create database has_config_test;' -U postgres
 script:
