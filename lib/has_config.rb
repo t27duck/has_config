@@ -66,6 +66,7 @@ module HasConfig
             config[key.to_s] = ([true,1].include?(input) || input =~ (/(true|t|yes|y|1)$/i)) ? true : false
           end
         end
+        public_send("#{self.class.configuration_column}_will_change!")
         write_attribute(self.class.configuration_column, config)
       end
     end
