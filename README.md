@@ -120,6 +120,10 @@ client.configuration_for_group(:style)
 => {primary_color: 'green', secondary_color: nil}
 ```
 
+## Testing
+
+Tests run using a PostgreSQL database called `has_config_test`. You should be able to just create a database named that and run `bundle exec rake test`.
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/has_config/fork )
