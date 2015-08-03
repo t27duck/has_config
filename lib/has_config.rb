@@ -54,20 +54,26 @@ module HasConfig
     def define_configuration_setter(key, type)
       define_method("#{key}=") do |input|
         config = (attributes[self.class.configuration_column] || {})
-        if input.nil?
-          config[key.to_s] = nil
-        else
-          case type
+        original_value = config[key.to_s]
+        parsed_value = nil
+
+        if !input.nil?
+          parsed_value = case type
           when :string
-            config[key.to_s] = input.to_s
+            input.to_s
           when :integer
-            config[key.to_s] = input.present? ? input.to_i : nil
+            input.present? ? input.to_i : nil
           when :boolean
-            config[key.to_s] = ([true,1].include?(input) || input =~ (/(true|t|yes|y|1)$/i)) ? true : false
+            ([true,1].include?(input) || input =~ (/(true|t|yes|y|1)$/i)) ? true : false
           end
         end
-        write_attribute(self.class.configuration_column, config)
-        public_send("#{self.class.configuration_column}_will_change!")
+
+        if original_value != parsed_value
+          config[key.to_s] = parsed_value
+          write_attribute(self.class.configuration_column, config)
+          public_send("#{self.class.configuration_column}_will_change!")
+        end
+
         input
       end
     end

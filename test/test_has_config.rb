@@ -120,5 +120,32 @@ class TestHasConfig < Minitest::Test
     object.reload
     assert_equal 'green', object.favorite_color
 
+    # Test changed?
+    config_column = klass.configuration_column
+    object = klass.new
+    assert_equal nil, object.favorite_color
+    object.favorite_color = 'blue'
+    assert_equal true, object.public_send("#{config_column}_changed?")
+    object.save!
+    object.favorite_color = 'green'
+    assert_equal true, object.public_send("#{config_column}_changed?")
+    object.save!
+    object.favorite_color = 'green'
+    assert_equal false, object.public_send("#{config_column}_changed?")
+
+    object = klass.create!(rate_limit: 1)
+    object.rate_limit = '1'
+    assert_equal false, object.public_send("#{config_column}_changed?")
+    object.rate_limit = '2'
+    assert_equal true, object.public_send("#{config_column}_changed?")
+    object.rate_limit = nil
+    assert_equal true, object.public_send("#{config_column}_changed?")
+
+    object = klass.create!(enable_email: true)
+    object.enable_email = '1'
+    assert_equal false, object.public_send("#{config_column}_changed?")
+    object.save!
+    object.enable_email = '0'
+    assert_equal true, object.public_send("#{config_column}_changed?")
   end
 end
