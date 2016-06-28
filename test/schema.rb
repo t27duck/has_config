@@ -5,10 +5,6 @@ ActiveRecord::Schema.define do
     t.text :prefs
   end
 
-  create_table :group_models, force: true do |t|
-    t.text :configuration
-  end
-
   create_table :hash_models, force: true do |t|
     t.text :configuration
   end
@@ -18,10 +14,6 @@ ActiveRecord::Schema.define do
   end
 
   create_table :with_defaults, force: true do |t|
-    t.text :configuration
-  end
-
-  create_table :with_groups, force: true do |t|
     t.text :configuration
   end
 

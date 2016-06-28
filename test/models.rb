@@ -1,63 +1,47 @@
 class CustomColumnModel < ActiveRecord::Base
   serialize :prefs
-  include HasConfig
-  self.configuration_column = :prefs
+  include HasConfig::ActiveRecordModel
+  self.config_column = :prefs
 
-  has_config :favorite_color, :string
-  has_config :enable_email, :boolean
-  has_config :rate_limit, :integer
-end
-
-class GroupModel < ActiveRecord::Base
-  serialize :configuration
-  include HasConfig
-
-  has_config :favorite_color, :string
-  has_config :enable_email, :boolean, group: :security
-  has_config :rate_limit, :integer, group: :security
+  has_config :favorite_color
+  has_config :enable_email
+  has_config :rate_limit
 end
 
 class HashModel < ActiveRecord::Base
   serialize :configuration
-  include HasConfig
+  include HasConfig::ActiveRecordModel
 
-  has_config :favorite_color, :string
-  has_config :enable_email, :boolean
-  has_config :rate_limit, :integer
+  has_config :favorite_color
+  has_config :enable_email
+  has_config :rate_limit
 end
 
 class JsonModel < ActiveRecord::Base
-  include HasConfig
+  include HasConfig::ActiveRecordModel
 
-  has_config :favorite_color, :string
-  has_config :enable_email, :boolean
-  has_config :rate_limit, :integer
+  has_config :favorite_color
+  has_config :enable_email
+  has_config :rate_limit
 end
 
 class WithDefault < ActiveRecord::Base
   serialize :configuration
-  include HasConfig
+  include HasConfig::ActiveRecordModel
 
   has_config :favorite_color, :string, default: 'red'
-  has_config :enable_email, :boolean
-  has_config :rate_limit, :integer
+  has_config :enable_email
+  has_config :rate_limit
 end
-
-class WithGroup < ActiveRecord::Base
-  serialize :configuration
-  include HasConfig
-
-  has_config :favorite_color, :string
-  has_config :enable_email, :boolean, group: :some_group
-  has_config :rate_limit, :integer, group: :some_group
-end
-
 
 class WithValidation < ActiveRecord::Base
   serialize :configuration
-  include HasConfig
+  include HasConfig::ActiveRecordModel
 
-  has_config :favorite_color, :string, validations: {presence: true}
-  has_config :enable_email, :boolean
-  has_config :rate_limit, :integer, validations: {inclusion: {in: [1,2,3]}}
+  has_config :favorite_color
+  has_config :enable_email
+  has_config :rate_limit
+
+  has_config :listed_rate_limit
+  has_config :required_favorite_color
 end

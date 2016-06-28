@@ -17,6 +17,8 @@ ActiveRecord::Base.establish_connection({
   database: "has_config_test"
 })
 
+HasConfig::Engine.load
+
 require 'schema'
 require 'models'
 

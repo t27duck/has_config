@@ -9,7 +9,7 @@ class TestHasConfig < Minitest::Test
     object = WithValidation.new
     refute object.valid?
 
-    assert object.errors[:favorite_color].include?("can't be blank")
+    assert object.errors[:required_favorite_color].include?("can't be blank")
     assert object.errors[:rate_limit].include?('is not included in the list')
 
     object.favorite_color = 'red'
@@ -20,18 +20,6 @@ class TestHasConfig < Minitest::Test
   def test_default_values_are_set
     object = WithDefault.new
     refute object.favorite_color.nil?
-  end
-
-  def test_group_organizes_config
-    run_tests WithGroup
-
-    object = WithGroup.new
-    group_info = object.configuration_for_group(:some_group)
-    refute group_info.has_key?(:favorite_color)
-    assert group_info.has_key?(:enable_email)
-    assert group_info.has_key?(:rate_limit)
-
-    assert_equal object.configuration_for_group(:non_existant_group), {}
   end
 
   def test_standard_hash_column_model
@@ -121,7 +109,7 @@ class TestHasConfig < Minitest::Test
     assert_equal 'green', object.favorite_color
 
     # Test changed?
-    config_column = klass.configuration_column
+    config_column = klass.config_column
     object = klass.new
     assert_equal nil, object.favorite_color
     object.favorite_color = 'blue'
