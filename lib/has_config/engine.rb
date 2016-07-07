@@ -4,10 +4,10 @@ module HasConfig
       @settings ||= {}
     end
 
-    def self.load(filepath='config/settings.rb')
-      raise ConfigurationNotFound, "No such file '#{filepath}'" unless File.exist?(filepath)
+    def self.load(path: 'config/settings.rb')
+      raise ConfigurationNotFound, "No such file '#{path}'" unless File.exist?(path)
       clear_settings
-      ConfigReader.new.instance_eval(File.read(filepath))
+      ConfigReader.new.instance_eval(File.read(path))
     end
 
     def self.register_setting(setting)

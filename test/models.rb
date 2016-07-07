@@ -29,9 +29,11 @@ class WithDefault < ActiveRecord::Base
   serialize :configuration
   include HasConfig::ActiveRecordModel
 
-  has_config :favorite_color, :string, default: 'red'
+  has_config :favorite_color
   has_config :enable_email
   has_config :rate_limit
+
+  has_config :favorite_color_default
 end
 
 class WithValidation < ActiveRecord::Base

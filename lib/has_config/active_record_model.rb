@@ -51,7 +51,7 @@ module HasConfig
           parsed_value    = nil
 
           if !input.nil?
-            parsed_value = case type
+            parsed_value = case setting.type
             when :string
               input.to_s
             when :integer
@@ -63,8 +63,8 @@ module HasConfig
 
           if original_value != parsed_value
             config[name.to_s] = parsed_value
-            write_attribute(self.class.configuration_column, config)
-            public_send("#{self.class.configuration_column}_will_change!")
+            write_attribute(self.class.config_column, config)
+            public_send("#{self.class.config_column}_will_change!")
           end
 
           input
@@ -72,6 +72,7 @@ module HasConfig
       end
 
       def set_config_validations(setting)
+        return if setting.validations.blank?
         validates setting.name, setting.validations
       end
 

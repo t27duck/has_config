@@ -13,11 +13,11 @@ require 'active_record'
 require 'pg'
 
 ActiveRecord::Base.establish_connection({
-  adapter: "postgresql",
-  database: "has_config_test"
+  adapter: 'postgresql',
+  database: 'has_config_test'
 })
 
-HasConfig::Engine.load
+HasConfig::Engine.load(path: 'test/config/settings.rb')
 
 require 'schema'
 require 'models'

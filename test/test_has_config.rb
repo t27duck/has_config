@@ -10,16 +10,16 @@ class TestHasConfig < Minitest::Test
     refute object.valid?
 
     assert object.errors[:required_favorite_color].include?("can't be blank")
-    assert object.errors[:rate_limit].include?('is not included in the list')
+    assert object.errors[:listed_rate_limit].include?('is not included in the list')
 
-    object.favorite_color = 'red'
-    object.rate_limit = 1
+    object.required_favorite_color = 'red'
+    object.listed_rate_limit = 1
     assert object.valid?
   end
 
   def test_default_values_are_set
     object = WithDefault.new
-    refute object.favorite_color.nil?
+    refute object.favorite_color_default.nil?
   end
 
   def test_standard_hash_column_model
