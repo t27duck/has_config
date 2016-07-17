@@ -1,5 +1,5 @@
 module HasConfig
-  CHAINING_OPTIONS = %i(blank nil false)
+  CHAINING_OPTIONS = %i(blank nil false).freeze
 
   module ActiveRecordModel
     def self.included(base)
@@ -70,18 +70,7 @@ module HasConfig
         define_method("#{name}=") do |input|
           config          = (attributes[self.class.config_column] || {})
           original_value  = config[name.to_s]
-          parsed_value    = nil
-
-          unless input.nil?
-            parsed_value = case setting.type
-                           when :string
-                             input.to_s
-                           when :integer
-                             input.present? ? input.to_i : nil
-                           when :boolean
-                             ([true, 1].include?(input) || input =~ /(true|t|yes|y|1)$/i) ? true : false
-            end
-          end
+          parsed_value    = HasConfig::ValueParser.parse(input, setting.type)
 
           if original_value != parsed_value
             config[name.to_s] = parsed_value
