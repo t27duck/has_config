@@ -14,7 +14,7 @@ module HasConfig
 
         define_config_getter(setting, parent: parent, chain_on: chain_on)
         define_config_setter(setting)
-        set_config_validations(setting)
+        add_config_validations(setting)
       end
 
       def config_column
@@ -39,7 +39,7 @@ module HasConfig
 
         define_method("#{name}_resolved") do
           local_value = public_send(name)
-          if parent && inoke_chain?(local_value, chain_on)
+          if parent && HasConfig::ValueParser.inoke_chain?(local_value, chain_on)
             public_send(parent).public_send("#{name}_resolved")
           end
           return local_value
@@ -50,17 +50,6 @@ module HasConfig
             config = (attributes[self.class.config_column] || {})
             config[name.to_s].nil? ? default : config[name.to_s]
           end
-        end
-      end
-
-      def invoke_chain?(value, chain_on)
-        case chain_on
-        when :blank
-          value.blank?
-        when :nil
-          value.nil?
-        when :false
-          value == false
         end
       end
 
@@ -82,7 +71,7 @@ module HasConfig
         end
       end
 
-      def set_config_validations(setting)
+      def add_config_validations(setting)
         return if setting.validations.blank?
         validates setting.name, setting.validations
       end
