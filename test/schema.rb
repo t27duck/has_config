@@ -21,4 +21,3 @@ ActiveRecord::Schema.define do
     t.text :configuration
   end
 end
-

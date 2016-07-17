@@ -35,7 +35,6 @@ class TestHasConfig < Minitest::Test
   end
 
   def run_tests(klass)
-
     default_config = {
       favorite_color: 'red',
       enable_email: true,

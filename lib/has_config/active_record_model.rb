@@ -50,14 +50,14 @@ module HasConfig
           original_value  = config[name.to_s]
           parsed_value    = nil
 
-          if !input.nil?
+          unless input.nil?
             parsed_value = case setting.type
-            when :string
-              input.to_s
-            when :integer
-              input.present? ? input.to_i : nil
-            when :boolean
-              ([true,1].include?(input) || input =~ (/(true|t|yes|y|1)$/i)) ? true : false
+                           when :string
+                             input.to_s
+                           when :integer
+                             input.present? ? input.to_i : nil
+                           when :boolean
+                             ([true, 1].include?(input) || input =~ /(true|t|yes|y|1)$/i) ? true : false
             end
           end
 
@@ -75,7 +75,6 @@ module HasConfig
         return if setting.validations.blank?
         validates setting.name, setting.validations
       end
-
     end
   end
 end
