@@ -34,6 +34,8 @@ class TestHasConfig < Minitest::Test
     run_tests CustomColumnModel
   end
 
+  private ######################################################################
+
   def run_tests(klass)
     default_config = {
       favorite_color: 'red',

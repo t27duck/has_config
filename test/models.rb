@@ -47,3 +47,20 @@ class WithValidation < ActiveRecord::Base
   has_config :listed_rate_limit
   has_config :required_favorite_color
 end
+
+class ChainOne < ActiveRecord::Base
+  include HasConfig::ActiveRecordModel
+  has_config :chained_config, parent: :chain_two
+  belongs_to :chain_two
+end
+
+class ChainTwo < ActiveRecord::Base
+  include HasConfig::ActiveRecordModel
+  has_config :chained_config, parent: :chain_three
+  belongs_to :chain_three
+end
+
+class ChainThree < ActiveRecord::Base
+  include HasConfig::ActiveRecordModel
+  has_config :chained_config
+end
