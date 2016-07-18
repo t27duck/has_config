@@ -3,3 +3,11 @@ Metrics/LineLength:
 
 MethodLength:
   Max: 35
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+

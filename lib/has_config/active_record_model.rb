@@ -13,7 +13,7 @@ module HasConfig
         raise ArgumentError, "Invalid chain_on option: #{chain_on}" unless CHAINING_OPTIONS.include?(chain_on)
 
         define_config_getter(setting)
-        define_config_resolved(setting, parent: parent, chain_on: chain_on) if parent
+        define_config_resolved(setting.name, parent: parent, chain_on: chain_on) if parent
         define_config_setter(setting)
         add_config_validations(setting)
       end
@@ -29,24 +29,24 @@ module HasConfig
       private ##################################################################
 
       def define_config_getter(setting)
-        name            = setting.name
+        name            = setting.name.to_s
         default         = setting.default
         include_boolean = setting.type == :boolean
 
         define_method(name) do
           config = (attributes[self.class.config_column] || {})
-          config[name.to_s].nil? ? default : config[name.to_s]
+          config[name].nil? ? default : config[name]
         end
 
         if include_boolean
           define_method("#{name}?") do
             config = (attributes[self.class.config_column] || {})
-            config[name.to_s].nil? ? default : config[name.to_s]
+            config[name].nil? ? default : config[name]
           end
         end
       end
 
-      def define_config_resolved(setting, parent: nil, chain_on: nil)
+      def define_config_resolved(name, parent: nil, chain_on: nil)
         define_method("#{name}_resolved") do
           local_value = public_send(name)
           if parent && HasConfig::ValueParser.inoke_chain?(local_value, chain_on)
@@ -62,15 +62,14 @@ module HasConfig
       end
 
       def define_config_setter(setting)
-        name = setting.name
+        name = setting.name.to_s
 
         define_method("#{name}=") do |input|
           config          = (attributes[self.class.config_column] || {})
-          original_value  = config[name.to_s]
           parsed_value    = HasConfig::ValueParser.parse(input, setting.type)
 
-          if original_value != parsed_value
-            config[name.to_s] = parsed_value
+          if config[name] != parsed_value
+            config[name] = parsed_value
             write_attribute(self.class.config_column, config)
             public_send("#{self.class.config_column}_will_change!")
           end
