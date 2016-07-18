@@ -4,11 +4,11 @@ module HasConfig
 
     attr_reader :name, :type, :default, :validations
 
-    def initialize(name, type, default: nil, validations: {})
+    def initialize(name, type, default: nil, validations: [])
       @name         = name.to_sym
       @type         = type.to_sym
       @default      = default
-      @validations  = validations
+      @validations  = [validations].flatten
       validate_setting
     end
 

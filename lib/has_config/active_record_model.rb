@@ -79,8 +79,9 @@ module HasConfig
       end
 
       def add_config_validations(setting)
-        return if setting.validations.blank?
-        validates setting.name, setting.validations
+        setting.validations.each do |validation|
+          validates setting.name, validation
+        end
       end
     end
   end
