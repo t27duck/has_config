@@ -1,19 +1,16 @@
 module HasConfig
-  CHAINING_OPTIONS = %i(blank nil false).freeze
-
   module ActiveRecordModel
     def self.included(base)
       base.extend ClassMethods
     end
 
     module ClassMethods
-      def has_config(key, parent: nil, chain_on: :blank)
+      def has_config(key, parent: nil)
         setting = HasConfig::Engine.settings[key.to_sym]
         raise HasConfig::UnknownConfig, "No setting found for #{key}" if setting.nil?
-        raise ArgumentError, "Invalid chain_on option: #{chain_on}" unless CHAINING_OPTIONS.include?(chain_on)
 
         define_config_getter(setting)
-        define_config_resolved(setting.name, parent: parent, chain_on: chain_on) if parent
+        define_config_resolved(setting.name, parent: parent, chain_on: setting.chain_on) if parent
         define_config_setter(setting)
         add_config_validations(setting)
       end
