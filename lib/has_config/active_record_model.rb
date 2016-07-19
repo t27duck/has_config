@@ -9,10 +9,9 @@ module HasConfig
         setting = HasConfig::Engine.settings[key.to_sym]
         raise HasConfig::UnknownConfig, "No setting found for #{key}" if setting.nil?
 
-        define_config_getter(setting)
-        define_config_resolved(setting.name, parent: parent, chain_on: setting.chain_on) if parent
-        define_config_setter(setting)
-        add_config_validations(setting)
+        define_has_config_getter(setting, parent: parent)
+        define_has_config_setter(setting)
+        apply_has_config_validations(setting)
       end
 
       def config_column
@@ -25,40 +24,30 @@ module HasConfig
 
       private ##################################################################
 
-      def define_config_getter(setting)
-        name            = setting.name.to_s
-        default         = setting.default
-        include_boolean = setting.type == :boolean
+      def define_has_config_getter(setting, parent: nil)
+        name = setting.name.to_s
 
-        define_method(name) do
-          config = (attributes[self.class.config_column] || {})
-          config[name].nil? ? default : config[name]
-        end
+        define_method(name) do |mode = :none|
+          config      = (attributes[self.class.config_column] || {})
+          local_value = config[name].nil? ? setting.default : config[name]
+          return local_value unless mode == :resolve
 
-        if include_boolean
-          define_method("#{name}?") do
-            config = (attributes[self.class.config_column] || {})
-            config[name].nil? ? default : config[name]
+          if parent && mode == :resolve && HasConfig::ValueParser.inoke_chain?(local_value, setting.chain_on)
+            parent_value = public_send(:parent).public_send(name, :resolve)
+            return parent_value unless parent_value.blank?
           end
-        end
-      end
 
-      def define_config_resolved(name, parent: nil, chain_on: nil)
-        define_method("#{name}_resolved") do
-          local_value = public_send(name)
-          if parent && HasConfig::ValueParser.inoke_chain?(local_value, chain_on)
-            parent_object = public_send(parent)
-            if parent_object.presond_to?("#{name}_resolved".to_sym)
-              parent_object.public_send("#{name}_resolved")
-            else
-              parent_object.public_send(name.to_sym)
-            end
-          end
           local_value
         end
+
+        if setting.type == :boolean
+          define_method("#{name}?") do |mode = :none|
+            public_send(name, mode)
+          end
+        end
       end
 
-      def define_config_setter(setting)
+      def define_has_config_setter(setting)
         name = setting.name.to_s
 
         define_method("#{name}=") do |input|
@@ -75,7 +64,7 @@ module HasConfig
         end
       end
 
-      def add_config_validations(setting)
+      def apply_has_config_validations(setting)
         setting.validations.each do |validation|
           validates setting.name, validation
         end

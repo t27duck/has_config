@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - test/**/*
+
 Metrics/LineLength:
   Max: 120
 
