@@ -32,8 +32,8 @@ module HasConfig
           local_value = config[name].nil? ? setting.default : config[name]
           return local_value unless mode == :resolve
 
-          if parent && mode == :resolve && HasConfig::ValueParser.inoke_chain?(local_value, setting.chain_on)
-            parent_value = public_send(:parent).public_send(name, :resolve)
+          if parent && mode == :resolve && HasConfig::ValueParser.invoke_chain?(local_value, setting.chain_on)
+            parent_value = public_send(parent).public_send(name, :resolve)
             return parent_value unless parent_value.blank?
           end
 

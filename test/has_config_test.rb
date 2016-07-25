@@ -5,6 +5,28 @@ class HasConfigTest < Minitest::Test
     refute_nil ::HasConfig::VERSION
   end
 
+  def test_chaining_models_use_their_local_values
+    chain_three = ChainThree.create!(chained_config: 3)
+    chain_two   = ChainTwo.create!(chained_config: 2, chain_three: chain_three)
+    chain_one   = ChainOne.create!(chained_config: 1, chain_two: chain_two)
+    assert_equal 3, chain_three.chained_config
+    assert_equal 2, chain_two.chained_config
+    assert_equal 1, chain_one.chained_config
+  end
+
+  def test_chaining_models_chain_up_if_blank_and_told_to
+    chain_three = ChainThree.create!(chained_config: 3)
+    chain_two   = ChainTwo.create!(chained_config: nil, chain_three: chain_three)
+    chain_one   = ChainOne.create!(chained_config: '', chain_two: chain_two)
+    assert_equal nil, chain_two.chained_config
+    assert_equal 3, chain_two.chained_config(:resolve)
+    assert_equal 3, chain_one.chained_config(:resolve)
+
+    chain_one.update_attributes!(chained_config: 1)
+    assert_equal 1, chain_one.chained_config
+    assert_equal 1, chain_one.chained_config(:resolve)
+  end
+
   def test_validations_can_be_attached
     object = WithValidation.new
     refute object.valid?
