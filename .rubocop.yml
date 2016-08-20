@@ -14,3 +14,5 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
+Style/PredicateName:
+  Enabled: false

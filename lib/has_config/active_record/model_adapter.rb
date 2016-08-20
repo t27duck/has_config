@@ -16,10 +16,10 @@ module HasConfig
           configuration = HasConfig::Engine.known_configurations[key.to_sym]
           if config.present?
             configuration = if configuration.nil?
-                        HasConfig::Configuration.new(key.to_sym, config)
-                      else
-                        HasConfig::Configuration.modify(configuration, config)
-                      end
+                              HasConfig::Configuration.new(key.to_sym, config)
+                            else
+                              HasConfig::Configuration.modify(configuration, config)
+                            end
           end
           raise HasConfig::UnknownConfig, "Unknown config #{key}" if configuration.nil?
 
