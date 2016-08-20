@@ -12,7 +12,7 @@ In an attempt to cut down on cluttering your model with boolean columns, `has_co
 
 Supported Rubies: 2.0, 2.1, 2.2, 2.3
 
-Supported versions of `ActiveRecord`: 4.0, 4.1, 4.2, 5.0
+Supported versions of ActiveRecord: 4.0, 4.1, 4.2, 5.0
 
 ## Installation
 
@@ -184,7 +184,7 @@ An alternative to defining the definition of each setting in your model is to pu
 
 Giving a file located at `#{Rails.root}/config/has_config.rb`:
 
-````
+```ruby
 has_config :primary_color, config: { type: :string, default: 'green' }
 has_config :secondary_color, config: { type: :string }
 has_config :rate_limit, config: { type: :integer, validations: { numericality: { only_integer: true } } }
