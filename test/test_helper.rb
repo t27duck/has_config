@@ -1,3 +1,5 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'has_config'
 
@@ -10,10 +12,4 @@ MiniTest::Test = MiniTest::Unit::TestCase unless defined?(MiniTest::Test)
 require 'active_record'
 require 'pg'
 
-ActiveRecord::Base.establish_connection(adapter: 'postgresql',
-                                        database: 'has_config_test')
-
-HasConfig::Engine.load(path: 'test/config/settings.rb')
-
-require 'schema'
-require 'models'
+ActiveRecord::Base.establish_connection(adapter: 'postgresql', database: 'has_config_test')

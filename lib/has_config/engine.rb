@@ -1,21 +1,27 @@
 module HasConfig
   class Engine
-    def self.settings
-      @settings ||= {}
+    class ConfigurationFileReader
+      def has_config(name, config: {})
+        Engine.register_configuration Configuration.new(name, config)
+      end
     end
 
-    def self.load(path: 'config/settings.rb')
-      raise ConfigurationNotFound, "No such file '#{path}'" unless File.exist?(path)
-      clear_settings
-      ConfigReader.new.instance_eval(File.read(path))
+    def self.known_configurations
+      @known_configurations ||= {}
     end
 
-    def self.register_setting(setting)
-      settings[setting.name] = setting
+    def self.load(path: 'config/has_config.rb')
+      raise ConfigurationFileNotFound, "No such file '#{path}'" unless File.exist?(path)
+      clear_configurations
+      ConfigurationFileReader.new.instance_eval(File.read(path))
     end
 
-    def self.clear_settings
-      @settings = {}
+    def self.register_configuration(configuration)
+      known_configurations[configuration.name.to_sym] = configuration
+    end
+
+    def self.clear_configurations
+      @known_configurations = {}
     end
   end
 end
