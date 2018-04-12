@@ -1,3 +1,7 @@
+## 0.2.1 (2018-04-12)
+
+* Update requirements of gem (Only currently supported Rubies and Rails tested and supported)
+
 ## 0.2.0 (2016-08-20)
 
 * Full rewrite (Imported code from https://github.com/t27duck/cerulean)
