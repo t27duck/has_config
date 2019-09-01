@@ -1,16 +1,21 @@
 language: ruby
 rvm:
-  - 2.3.7
-  - 2.4.4
-  - 2.5.1
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
 gemfile:
   - gemfiles/4.2.gemfile
   - gemfiles/5.1.gemfile
   - gemfiles/5.2.gemfile
+  - gemfiles/6.0.gemfile
 addons:
   postgresql: '9.6'
 before_script:
   - psql -c 'create database has_config_test;' -U postgres
 script:
   - bundle exec rake test
+matrix:
+  exclude:
+    - rvm: 2.4.6
+      gemfile: gemfiles/6.0.gemfile
 sudo: false
