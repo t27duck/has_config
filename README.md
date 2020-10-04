@@ -1,6 +1,6 @@
 # HasConfig
 
-[![Build Status](https://travis-ci.org/t27duck/has_config.svg?branch=master)](https://travis-ci.org/t27duck/has_config)
+[![Build Status](https://travis-ci.org/t27duck/has_config.svg?branch=main)](https://travis-ci.org/t27duck/has_config)
 [![Code Climate](https://codeclimate.com/github/t27duck/has_config/badges/gpa.svg)](https://codeclimate.com/github/t27duck/has_config)
 [![Test Coverage](https://codeclimate.com/github/t27duck/has_config/badges/coverage.svg)](https://codeclimate.com/github/t27duck/has_config/coverage)
 
