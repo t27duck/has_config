@@ -1,3 +1,9 @@
+## 0.3.0 (Unreleased)
+
+* Deprication warning cleanup
+* Support Ruby 2.5, 2.6, and 2.7
+* Support Rails 5.2 and 6.0
+
 ## 0.2.1 (2018-04-12)
 
 * Update requirements of gem (Only currently supported Rubies and Rails tested and supported)
