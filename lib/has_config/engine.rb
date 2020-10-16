@@ -2,7 +2,7 @@ module HasConfig
   class Engine
     class ConfigurationFileReader
       def has_config(name, config: {})
-        Engine.register_configuration Configuration.new(name, config)
+        Engine.register_configuration Configuration.new(name, **config)
       end
     end
 

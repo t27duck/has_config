@@ -16,7 +16,7 @@ module HasConfig
           configuration = HasConfig::Engine.known_configurations[key.to_sym]
           if config.present?
             configuration = if configuration.nil?
-                              HasConfig::Configuration.new(key.to_sym, config)
+                              HasConfig::Configuration.new(key.to_sym, **config)
                             else
                               HasConfig::Configuration.modify(configuration, config)
                             end
