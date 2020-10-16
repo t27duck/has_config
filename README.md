@@ -8,9 +8,9 @@ In an attempt to cut down on cluttering your model with boolean columns, `has_co
 
 ## Requirements
 
-Supported Rubies: 2.4, 2.5, 2.6
+Supported Rubies: 2.5, 2.6, 2.7
 
-Supported versions of ActiveRecord: 4.2 - 6.0
+Supported versions of ActiveRecord: 5.2 - 6.0
 
 ## Installation
 
