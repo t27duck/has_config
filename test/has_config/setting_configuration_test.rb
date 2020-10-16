@@ -19,7 +19,7 @@ class HasConfig::ConfigurationTest < Minitest::Test
     assert_equal @name, configuration.name
     assert_equal @type.to_sym, configuration.type
     assert_equal :blank, configuration.chain_on
-    assert_equal nil, configuration.default
+    assert_nil configuration.default
     assert_equal [], configuration.validations
   end
 

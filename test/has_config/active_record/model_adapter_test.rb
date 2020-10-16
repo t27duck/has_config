@@ -27,11 +27,11 @@ class HasConfig::ActiveRecord::ModelAdapterTest < Minitest::Test
     assert_equal 3, client.chained_integer(:resolve)
     assert_equal 3, client.chained_integer
 
-    assert_equal nil, group.chained_integer
+    assert_nil group.chained_integer
     assert_equal 3, group.chained_integer(:resolve)
     assert_equal 3, user.chained_integer(:resolve)
 
-    user.update_attributes!(chained_integer: 1)
+    user.update!(chained_integer: 1)
     assert_equal 1, user.chained_integer
     assert_equal 1, user.chained_integer(:resolve)
   end
@@ -115,7 +115,7 @@ class HasConfig::ActiveRecord::ModelAdapterTest < Minitest::Test
     end
   end
 
-  def test_update_attributes_updates_the_settings
+  def test_update_updates_the_settings
     [
       BasicModel.new,
       ParentModel.new,
@@ -124,11 +124,11 @@ class HasConfig::ActiveRecord::ModelAdapterTest < Minitest::Test
       JsonbColumnModel.new,
       CustomColumnModel.new
     ].each do |model|
-      assert_equal nil, model.string_setting
-      assert_equal nil, model.integer_setting
-      assert_equal nil, model.boolean_setting
-      assert_equal nil, model.boolean_setting?
-      model.update_attributes!(string_setting: 'string', integer_setting: 2, boolean_setting: true)
+      assert_nil model.string_setting
+      assert_nil model.integer_setting
+      assert_nil model.boolean_setting
+      assert_nil model.boolean_setting?
+      model.update!(string_setting: 'string', integer_setting: 2, boolean_setting: true)
       assert_equal 'string', model.string_setting
       assert_equal 2, model.integer_setting
       assert_equal true, model.boolean_setting
