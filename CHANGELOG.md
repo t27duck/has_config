@@ -1,5 +1,6 @@
-## 0.3.0 (Unreleased)
+## 0.3.0 (2020-10-15)
 
+* Default git branch is now "main"
 * Deprication warning cleanup
 * Support Ruby 2.5, 2.6, and 2.7
 * Support Rails 5.2 and 6.0
