@@ -12,6 +12,7 @@ on:
 env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+  PGPASSWORD: postgres
   POSTGRES_HOST: localhost
 
 jobs:
@@ -29,23 +30,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - gemfile: 5.2
-            ruby: 2.5
+          - gemfile: '5.2'
+            ruby: '2.5'
 
-          - gemfile: 5.2
-            ruby: 2.6
+          - gemfile: '5.2'
+            ruby: '2.6'
 
-          - gemfile: 5.2
-            ruby: 2.7
+          - gemfile: '5.2'
+            ruby: '2.7'
 
-          - gemfile: 6.0
-            ruby: 2.5
+          - gemfile: '6.0'
+            ruby: '2.5'
 
-          - gemfile: 6.0
-            ruby: 2.6
+          - gemfile: '6.0'
+            ruby: '2.6'
 
-          - gemfile: 6.0
-            ruby: 2.7
+          - gemfile: '6.0'
+            ruby: '2.7'
 
     name: rails ${{ matrix.gemfile }}, ruby ${{ matrix.ruby }}
 
@@ -65,7 +66,7 @@ jobs:
 
     - name: Create DB
       run: |
-        psql -c 'create database has_config_test;' -U postgres
+        psql -c 'create database has_config_test;' -U postgres -h localhost
 
     - name: Run tests
       run: |
