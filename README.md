@@ -1,6 +1,6 @@
 # HasConfig
 
-[![Build Status](https://travis-ci.org/t27duck/has_config.svg?branch=main)](https://travis-ci.org/t27duck/has_config)
+![Build Status](https://github.com/t27duck/has_config/workflows/CI/badge.svg)
 
 When working with models in a large Rails project, you sometimes end up with "god objects" which start to be loaded down with several booleans, integers, and strings from select boxes that act as configuration options. As time goes on, you add more and more columns. As your database and user-base grows, adding even a single column more can bring your app to a hang during a deploy due to table locking or a slew of exceptions due to [issues and gotchas like this](https://github.com/rails/rails/issues/12330).
 
