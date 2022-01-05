@@ -1,3 +1,8 @@
+## 0.3.1 (Unreleased)
+
+* Support Ruby 2.6, 2.7, and 3.0
+* Support Rails 5.2 - 7.0
+
 ## 0.3.0 (2020-10-15)
 
 * Default git branch is now "main"
