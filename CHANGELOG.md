@@ -1,7 +1,7 @@
 ## 0.3.1 (Unreleased)
 
-* Support Ruby 3.0, 3.1 and 3.2
-* Support Rails 6.1 and 7.0
+* Support Ruby 3.0, 3.1, 3.2, and 3.3
+* Support Rails 6.1, 7.0, and 7.1
 
 ## 0.3.0 (2020-10-15)
 
