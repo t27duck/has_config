@@ -30,38 +30,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - gemfile: '6.1'
-            ruby: '3.0'
-
-          - gemfile: '6.1'
-            ruby: '3.1'
-
-          - gemfile: '6.1'
+          - gemfile: '8.0'
             ruby: '3.2'
 
-          - gemfile: '7.0'
-            ruby: '3.0'
-
-          - gemfile: '7.0'
-            ruby: '3.1'
-
-          - gemfile: '7.0'
-            ruby: '3.2'
-
-          - gemfile: '7.0'
+          - gemfile: '8.0'
             ruby: '3.3'
 
-          - gemfile: '7.1'
-            ruby: '3.0'
-
-          - gemfile: '7.1'
-            ruby: '3.1'
+          - gemfile: '8.0'
+            ruby: '3.4'
 
           - gemfile: '7.1'
             ruby: '3.2'
 
           - gemfile: '7.1'
             ruby: '3.3'
+
+          - gemfile: '7.1'
+            ruby: '3.4'
 
     name: rails ${{ matrix.gemfile }}, ruby ${{ matrix.ruby }}
 
